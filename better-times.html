@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Desempleo</title>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html">Revista UTE</a> <a href="icvu-2019.html">ICVU 2019</a> <a href="psu-nem.html">PSU/NEM</a> <a href="better-times.html" class="actual">DESEMPLEO</a> <a href="global-warming.html">CALENTAMIENTO GLOBAL</a>
+    </nav>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+
+</body>
+<script>
+var datos_hombres, datos_mujeres;
+
+function preload() {
+    datos_hombres = loadTable('https://raw.githubusercontent.com/sofiafonseca/cuarto-desafio/master/desempleo-hombres.csv', 'csv', 'header');
+    datos_mujeres = loadTable('https://raw.githubusercontent.com/sofiafonseca/cuarto-desafio/master/desempleo-mujeres.csv', 'csv', 'header');
+}
+
+function setup() {
+    console.log(datos_hombres);
+    console.log(datos_mujeres);
+    createCanvas(1350, 900);
+    noLoop();
+    radio = createRadio();
+    radio.position(width - 350, 15);
+    radio.style('font-size', '11px');
+    radio.option('Feb-Abr 2019 ', 1).checked = true;
+    radio.option('Mar-May 2019 ', 2);
+    radio.option('Abr-Jun 2019 ', 3);
+    radio.changed(viz);
+    textAlign(RIGHT);
+    for (i = 0; i < 16; i++) {
+        noStroke();
+        fill(0);
+        text(datos_hombres.get(i, 0), 50, 100 + (50 * i), 200);
+        fill(200);
+        rect(280, 80 + (50 * i), width - 500, 40);
+
+    }
+    fill(250, 0, 0);
+    rect(1280, height - 310, 10, 10);
+    textAlign(LEFT);
+    text('Hombres', 1300, height - 300);
+    fill(200, 0, 0);
+    rect(1280, height - 290, 10, 10);
+    text('Mujeres', 1300, height - 280);
+
+}
+
+function draw() {
+    opcion = radio.value();
+
+    if (opcion == 1) {
+        for (k = 0; k < 16; k++) {
+            fill(250, 0, 0);
+            rect(280, 80 + (50 * k), (datos_hombres.get(k, 1)) * 50, 20);
+            fill(200, 0, 0);
+            rect(280, 100 + (50 * k), (datos_mujeres.get(k, 1)) * 50, 20);
+        }
+    }else if (opcion == 2) {
+        for (k = 0; k < 16; k++) {
+            fill(250, 0, 0);
+            rect(280, 80 + (50 * k), (datos_hombres.get(k, 2)) * 50, 20);
+            fill(200, 0, 0);
+            rect(280, 100 + (50 * k), (datos_mujeres.get(k, 2)) * 50, 20);
+        }
+
+    }else{
+        for (k = 0; k < 16; k++) {
+            fill(250, 0, 0);
+            rect(280, 80 + (50 * k), (datos_hombres.get(k, 3)) * 50, 20);
+            fill(200, 0, 0);
+            rect(280, 100 + (50 * k), (datos_mujeres.get(k, 3)) * 50, 20);
+        }
+
+    }
+}
+
+function viz() {
+    clear();
+    textAlign(RIGHT);
+    
+    for (i = 0; i < 16; i++) {
+        noStroke();
+        fill(0);
+        text(datos_hombres.get(i, 0), 50, 100 + (50 * i), 200);
+        fill(200);
+        rect(280, 80 + (50 * i), width - 500, 40);
+
+    }
+    fill(250, 0, 0);
+    rect(1280, height - 310, 10, 10);
+    textAlign(LEFT);
+    text('Hombres', 1300, height - 300);
+    fill(200, 0, 0);
+    rect(1280, height - 290, 10, 10);
+    text('Mujeres', 1300, height - 280);
+
+    redraw();
+
+}
+</script>
+
+</html>
